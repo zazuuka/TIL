@@ -1,0 +1,72 @@
+#코딩 #개발자 #노마드북클럽 #노개북
+---
+#TIL
+종류: Today I Learned
+날짜: 2022-03-04
+metadata:
+  book: Clean Code
+  label:
+    name: 오류처리
+    chapter: 7
+    author: ['Michael Feathers']
+---
+#책에서 기억하고 싶은 내용
+type: 요약
+selector:
+  label:
+    book: Clean Code
+    chapter: 7
+introduction: 이 장에서는 ... 우아하고 고상하게 오류를 처리하는 기법과 고려 사항 몇 가지를 소개한다.
+subheadings:
+  - 오류 코드보다 예외를 사용하라:
+    extract:
+      - 오류가 발생하면 예외를 던지는 편이 낫다. ... 논리가 오류 처리 코드와 뒤섞이지 않으니까.
+      - 앞서 뒤섞였던 개념, ... 디바이스를 종료하는 알고리즘과 오류를 처리하는 알고리즘을 분리했기 때문이다.
+    comment: 예외를 지원하지 않는 언어를 쓸 일이 없을거 같아서 의미가 경감될 순 있지만, 다른 논리 사이에 구별이 있어야 함을 다시 일깨워준다.
+  - Try-Catch-Finally 문부터 작성하라
+  - 미확인(unchecked) 예외를 사용하라:
+    extract: 
+      - 그러므로 우리는 확인된 오류가 치르는 비용에 상응하는 이익을 제공하는지 (철저히) 따져봐야 한다.      
+    comment:
+      - 추상화 수준을 나눠 코드를 작성 시 Checked exception은 OCP, 캡슐화를 위반하기 때문이라 한다.
+    glossary:
+      - checked exception: 메소드에서 throw 혹은 try-catch 문으로 처리해야하는 예외를 가리킨다. 자바의 경우 java.lang.Throwable을 상속하는 예외를 사용 시 컴파일러가 이를 체크한다.
+      - OCP(Open Closed Principle): 확장에는 열려있고 수정에는 닫혀 있어야 한다는 SOLID 원칙 중 일부.
+  - 예외에 의미를 제공하라:
+    extract: 
+      - 오류 메시지에 정보를 담아 예외와 함께 던진다. 실패한 연산 이름과 실패 유형도 언급한다.
+      - ... 로깅 기능을 사용한다면 catch 블록에서 오류를 기록하도록 충분한 정보를 넘겨준다.
+  - 호출자를 고려해 예외 클래스를 정의하라:
+    extract:
+      - 애플리케이션에서 오류를 정의할 때 ... 가장 중요한 관심사는 오류를 잡아내는 방법이 되어야 한다.
+      - 외부 API를 사용할 때는 감싸기 기법이 최선이다.
+    glossary: 
+      - Wrapper Class: 
+          comment: 좀 어렵다 지금은 링크만 첨부한다.
+          links:
+          - https://en.wikipedia.org/wiki/Adapter_pattern
+          - http://www.tcpschool.com/java/java_api_wrapper
+  - 정상 흐름을 정의하라:
+    extract: 
+      - 이를 특수 사례 패턴(Special Case Pattern)이라 부른다. 클래스를 만들거나 객체를 조작해 특수 사례를 처리하는 방식이다.
+    comment:
+      - 예외 처리 시 특수 상황에 대한 처리가 들어갈 경우 코드의 가독성을 높이기 위한 패턴 설명이다. 코드의 수정없이 기존 클래스를 상속(혹은 인터페이스 구현)을 통해 예외적인 상황을 캡슐화해 처리한다.
+    glossary:
+      - 특수 사례 패턴(Special Case Pattern): 
+        comment: 역시나 링크 첨부.
+        links:
+          - https://dsmoon.tistory.com/entry/NULL-OBJECT-%ED%8C%A8%ED%84%B4
+          - https://martinfowler.com/eaaCatalog/specialCase.html
+          - https://java-design-patterns.com/patterns/special-case/
+  - null을 반환하지 마라:
+    extract: 
+      - null을 반환하는 코드는 ... 호출자에게 문제를 떠넘긴다.
+      - 사용하려는 외부 API가 null을 반환 한다면 감싸기 메서드를 구현해 예외를 던지거나 특수 사례 객체를 반환하는 방식을 고려한다. 많은 경우에 특수 사례 객체가 손쉬운 해결책이다.
+    comment: 
+      - null을 반환하는 코드의 문제는 NullPointerException 처리를 위해 null 확인을 너무 많아 문제가 생긴다. 코드의 가독성을 저해하기 때문이다.
+  - null을 전달하지 마라:
+    extract:
+      - 애초에 null을 넘기지 못하도록 금지하는 정책이 합리적이다.
+conclusion: |
+  오류 처리를 프로그램 논리와 분리하면 독립적인 추론이 가능해지며 코드 유지보수성도 크게 높아진다.
+
